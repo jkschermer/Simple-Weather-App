@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SimpleApp</string>
+    <string name="weather_today_button">Curious about the weather of your city?</string>
+    <string name="homescreen_toolbar_title">Simple Weather App</string>
+    <string name="empty_string" />
+    <string name="main_error_message">Please fill in a correct city</string>
+    <string name="input_label_textfield">Enter a city</string>
+    <string name="temperature">Temperature</string>
+    <string name="temperature_feels_like">Feels like</string>
+    <string name="maximum_temp">Maximum temperature</string>
+    <string name="min_temp">Minimum temperature</string>
+    <string name="weather_description">Weather</string>
+    <string name="weather_forecast_button">Do you want to know the weather forecast?</string>
+</resources>
