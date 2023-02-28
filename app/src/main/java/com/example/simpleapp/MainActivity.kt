@@ -1,5 +1,7 @@
 package com.example.simpleapp
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.generic.ui.AppToolbar
 import com.example.simpleapp.ui.theme.SimpleAppTheme
@@ -33,8 +34,13 @@ class MainActivity : ComponentActivity(), KoinComponent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
         setContent { MainScreen() }
+    }
+
+    companion object {
+        fun createIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
     }
 }
 
@@ -273,3 +279,4 @@ fun DefaultPreview() {
         )
     }
 }
+
