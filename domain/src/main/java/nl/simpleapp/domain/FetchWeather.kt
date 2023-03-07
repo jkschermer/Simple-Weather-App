@@ -1,12 +1,12 @@
 package nl.simpleapp.domain
 
 
-import nl.simpleapp.domain.weather.data.ReturnWeatherRepository
-import nl.simpleapp.domain.weather.model.WeatherInfo
+import nl.simpleapp.domain.weather.data.WeatherRepository
+import nl.simpleapp.domain.weather.model.CurrentWeatherData
 
-class FetchWeather(private val weatherRepository: ReturnWeatherRepository) {
+class FetchWeather(private val weatherRepository: WeatherRepository) {
 
-    suspend operator fun invoke(city: String): WeatherInfo {
+    suspend operator fun invoke(city: String): CurrentWeatherData {
         return weatherRepository.fetchWeather(city).toCelsius()
     }
 }

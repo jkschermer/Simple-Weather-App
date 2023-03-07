@@ -11,17 +11,24 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.generic.ui.AppToolbar
 import com.example.simpleapp.ui.theme.SimpleAppTheme
 import com.example.simpleapp.ui.theme.Spacing.x1
 import com.example.simpleapp.ui.theme.Spacing.x2
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.component.KoinComponent
 import simpleapp.presentation.generic.UIState
@@ -34,7 +41,15 @@ class MainActivity : ComponentActivity(), KoinComponent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { MainScreen() }
+        setContent {
+            SimpleAppTheme {
+                val navController = rememberNavController()
+                DestinationsNavHost(
+                    navGraph = NavGraphs.root,
+                    navController = navController
+                )
+            }
+        }
     }
 
     companion object {
@@ -44,9 +59,23 @@ class MainActivity : ComponentActivity(), KoinComponent {
     }
 }
 
+@RootNavGraph(start = true)
+@Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun MainScreen(viewModel: WeatherViewModel = koinViewModel()) {
+fun MainScreen(
+    destinationsNavigator: DestinationsNavigator = EmptyDestinationsNavigator,
+    viewModel: WeatherViewModel = koinViewModel()
+) {
+    val weatherNavigationAction = viewModel.navigation.observeAsState()
+    val navigator = remember(destinationsNavigator) { MainNavigator(destinationsNavigator) }
+
+    LaunchedEffect(weatherNavigationAction.value) {
+        weatherNavigationAction.value?.let { action ->
+            navigator.navigateToWeatherPredictionScreen(action)
+        }
+    }
+
     SimpleAppTheme {
         val weather = viewModel.weather.collectAsState()
         val date = viewModel.date.collectAsState()
@@ -78,6 +107,7 @@ private fun MainScreen(viewModel: WeatherViewModel = koinViewModel()) {
                 uiState = state.value,
                 weatherInfoUIModel = weather.value,
                 dateUIModel = date.value,
+                onPredictionClick = { viewModel.openPredictionWeather() },
                 modifier = Modifier.padding(it)
             )
         }
@@ -91,6 +121,7 @@ fun MainContent(
     uiState: UIState,
     weatherInfoUIModel: WeatherInfoUIModel?,
     dateUIModel: DateUIModel?,
+    onPredictionClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -119,7 +150,8 @@ fun MainContent(
             HandleState(
                 uiState = uiState,
                 weatherInfoUIModel = weatherInfoUIModel,
-                dateUIModel = dateUIModel
+                dateUIModel = dateUIModel,
+                onPredictionClick = onPredictionClick,
             )
         }
     }
@@ -130,10 +162,13 @@ private fun HandleState(
     uiState: UIState,
     weatherInfoUIModel: WeatherInfoUIModel?,
     dateUIModel: DateUIModel?,
+    onPredictionClick: () -> Unit,
 ) {
     when (uiState) {
         UIState.NORMAL -> NormalContent(
-            weatherInfoUIModel = weatherInfoUIModel, dateUIModel = dateUIModel
+            weatherInfoUIModel = weatherInfoUIModel,
+            dateUIModel = dateUIModel,
+            onPredictionClick = onPredictionClick,
         )
         UIState.LOADING -> LoadingContent()
         UIState.ERROR -> ErrorContent()
@@ -144,6 +179,7 @@ private fun HandleState(
 private fun NormalContent(
     weatherInfoUIModel: WeatherInfoUIModel?,
     dateUIModel: DateUIModel?,
+    onPredictionClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (weatherInfoUIModel != null) {
@@ -240,7 +276,7 @@ private fun NormalContent(
                 )
             }
             item {
-                Button(onClick = {  }) {
+                Button(onClick = { onPredictionClick() }) {
                     Text(text = stringResource(R.string.weather_forecast_button))
                 }
             }
@@ -275,7 +311,7 @@ fun DefaultPreview() {
             "Clouds",
             "https://people.sc.fsu.edu/~jburkardt/data/png/ajou_logo.png",
             "Amsterdam"
-        ), dateUIModel = DateUIModel("10", "10", "2023", "wednesday")
+        ), dateUIModel = DateUIModel("10", "10", "2023", "wednesday"), {}
         )
     }
 }

@@ -11,6 +11,7 @@ import nl.simpleapp.domain.FetchWeather
 import nl.simpleapp.domain.time.FetchDate
 import simpleapp.presentation.generic.SingleLiveEvent
 import simpleapp.presentation.generic.UIState
+import simpleapp.presentation.navigation.Navigator
 import simpleapp.presentation.navigation.WeatherNavigationAction
 
 class WeatherViewModel(
@@ -47,7 +48,7 @@ class WeatherViewModel(
         }
     }
 
-//    fun onItemClicked(weatherInfo: WeatherInfo) {
-//        _navigation.postValue(WeatherNavigationAction.OpenDetailWind(weatherInfo.main))
-//    }
+    fun openPredictionWeather() {
+        _navigation.postValue(WeatherNavigationAction.OPEN_WEATHER_PREDICTION)
+    }
 }
