@@ -18,10 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpleapp.R
-import com.example.simpleapp.ui.theme.SimpleAppTheme
-import com.example.simpleapp.ui.theme.Spacing.x1
-import com.example.simpleapp.ui.theme.Spacing.x2
-import com.example.simpleapp.ui.theme.Spacing.x8
+import com.example.simpleapp.SimpleAppTheme
+import com.example.simpleapp.theme.Spacing.x1
+import com.example.simpleapp.theme.Spacing.x2
+import com.example.simpleapp.theme.Spacing.x8
 
 @Composable
 fun AppToolbar(

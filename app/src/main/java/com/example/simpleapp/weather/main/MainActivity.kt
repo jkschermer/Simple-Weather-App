@@ -1,4 +1,4 @@
-package com.example.simpleapp
+package com.example.simpleapp.weather.main
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,15 +19,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.simpleapp.R
+import com.example.simpleapp.SimpleAppTheme
 import com.example.simpleapp.generic.ui.AppToolbar
-import com.example.simpleapp.ui.theme.SimpleAppTheme
-import com.example.simpleapp.ui.theme.Spacing.x1
-import com.example.simpleapp.ui.theme.Spacing.x2
+import com.example.simpleapp.theme.Spacing.x1
+import com.example.simpleapp.theme.Spacing.x2
+import com.example.simpleapp.weather.NavGraphs
+import com.example.simpleapp.weather.destinations.MainScreenDestination
+import com.example.simpleapp.weather.destinations.WeatherPredictionScreenDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.component.KoinComponent
 import simpleapp.presentation.generic.UIState
@@ -44,8 +46,10 @@ class MainActivity : ComponentActivity(), KoinComponent {
         setContent {
             SimpleAppTheme {
                 val navController = rememberNavController()
+
                 DestinationsNavHost(
                     navGraph = NavGraphs.root,
+                    startRoute = MainScreenDestination,
                     navController = navController
                 )
             }
@@ -64,53 +68,42 @@ class MainActivity : ComponentActivity(), KoinComponent {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    destinationsNavigator: DestinationsNavigator = EmptyDestinationsNavigator,
+    destinationsNavigator: DestinationsNavigator,
     viewModel: WeatherViewModel = koinViewModel()
 ) {
-    val weatherNavigationAction = viewModel.navigation.observeAsState()
-    val navigator = remember(destinationsNavigator) { MainNavigator(destinationsNavigator) }
+    val weather = viewModel.weather.collectAsState()
+    val date = viewModel.date.collectAsState()
+    val state = viewModel.state.collectAsState()
+    var city: String by rememberSaveable { mutableStateOf("") }
 
-    LaunchedEffect(weatherNavigationAction.value) {
-        weatherNavigationAction.value?.let { action ->
-            navigator.navigateToWeatherPredictionScreen(action)
-        }
-    }
-
-    SimpleAppTheme {
-        val weather = viewModel.weather.collectAsState()
-        val date = viewModel.date.collectAsState()
-        val state = viewModel.state.collectAsState()
-        var city: String by rememberSaveable { mutableStateOf("") }
-
-        Scaffold(
-            topBar = {
-                AppToolbar(
-                    textResId = R.string.homescreen_toolbar_title,
-                    textColor = MaterialTheme.colorScheme.background,
-                    modifier = Modifier.background(MaterialTheme.colorScheme.primary)
+    Scaffold(
+        topBar = {
+            AppToolbar(
+                textResId = R.string.homescreen_toolbar_title,
+                textColor = MaterialTheme.colorScheme.background,
+                modifier = Modifier.background(MaterialTheme.colorScheme.primary)
+            )
+        },
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+    ) { padding ->
+        MainContent(
+            onWeatherClick = { viewModel.getWeather(city) },
+            InputField = { modifier ->
+                TextField(
+                    value = city,
+                    onValueChange = { city = it },
+                    label = { Text(stringResource(R.string.input_label_textfield)) },
+                    modifier = modifier,
                 )
             },
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.background)
-                .fillMaxSize()
-        ) { it ->
-            MainContent(
-                onWeatherClick = { viewModel.getWeather(city) },
-                InputField = { modifier ->
-                    TextField(
-                        value = city,
-                        onValueChange = { city = it },
-                        label = { Text(stringResource(R.string.input_label_textfield)) },
-                        modifier = modifier,
-                    )
-                },
-                uiState = state.value,
-                weatherInfoUIModel = weather.value,
-                dateUIModel = date.value,
-                onPredictionClick = { viewModel.openPredictionWeather() },
-                modifier = Modifier.padding(it)
-            )
-        }
+            uiState = state.value,
+            weatherInfoUIModel = weather.value,
+            dateUIModel = date.value,
+            onPredictionClick = { destinationsNavigator.navigate(WeatherPredictionScreenDestination) },
+            modifier = Modifier.padding(paddingValues = padding)
+        )
     }
 }
 
