@@ -2,12 +2,13 @@ package simpleapp.presentation.weather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nl.simpleapp.domain.FetchWeather
 import nl.simpleapp.domain.time.FetchDate
 import simpleapp.presentation.generic.UIState
-import simpleapp.presentation.navigation.WeatherNavigationEvent
 
 class WeatherViewModel(
     private val fetchWeather: FetchWeather,
@@ -16,9 +17,6 @@ class WeatherViewModel(
 
     private val _state = MutableStateFlow(UIState.NORMAL)
     val state = _state.asStateFlow()
-
-    private val _navigation = MutableSharedFlow<WeatherNavigationEvent>()
-    val navigation: Flow<WeatherNavigationEvent> = _navigation
 
     private val _weather = MutableStateFlow<WeatherInfoUIModel?>(null)
     val weather: StateFlow<WeatherInfoUIModel?> = _weather

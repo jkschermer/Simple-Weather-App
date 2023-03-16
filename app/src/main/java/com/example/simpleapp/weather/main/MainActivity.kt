@@ -21,7 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.R
 import com.example.simpleapp.SimpleAppTheme
-import com.example.simpleapp.generic.ui.AppToolbar
+import com.example.simpleapp.generic.ui.MainToolbar
 import com.example.simpleapp.theme.Spacing.x1
 import com.example.simpleapp.theme.Spacing.x2
 import com.example.simpleapp.weather.NavGraphs
@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
 @Composable
 fun MainScreen(
     destinationsNavigator: DestinationsNavigator,
-    viewModel: WeatherViewModel = koinViewModel()
+    viewModel: WeatherViewModel = koinViewModel(),
 ) {
     val weather = viewModel.weather.collectAsState()
     val date = viewModel.date.collectAsState()
@@ -77,13 +77,7 @@ fun MainScreen(
     var city: String by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
-        topBar = {
-            AppToolbar(
-                textResId = R.string.homescreen_toolbar_title,
-                textColor = MaterialTheme.colorScheme.background,
-                modifier = Modifier.background(MaterialTheme.colorScheme.primary)
-            )
-        },
+        topBar = { MainToolbar() },
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
@@ -219,7 +213,8 @@ private fun NormalContent(
                     BoxWithConstraints(
                         modifier = Modifier.weight(1F)
                     ) {
-                        val imageSize = (maxHeight.times(0.5F)).coerceAtMost(maxWidth.times(0.5F))
+                        val imageSize =
+                            (maxHeight.times(0.5F)).coerceAtMost(maxWidth.times(0.5F))
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier.fillMaxWidth()
