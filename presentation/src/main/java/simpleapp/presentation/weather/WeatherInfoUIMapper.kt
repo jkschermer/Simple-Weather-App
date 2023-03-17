@@ -21,7 +21,7 @@ object WeatherInfoUIMapper {
         )
     }
 
-    private fun Double.toDisplayString(): String {
+    fun Double.toDisplayString(): String {
         return this.toString().plus(CELSIUS_SYMBOL)
     }
 

@@ -10,6 +10,8 @@
     <string name="maximum_temp">Maximum temperature</string>
     <string name="min_temp">Minimum temperature</string>
     <string name="weather_description">Weather</string>
-    <string name="weather_forecast_button">5-day Weather  Forecast</string>
+    <string name="weather_forecast_button">5-day Weather Forecast</string>
     <string name="weather_prediction_screen_toolbar">Weather Forecast</string>
+    <string name="weather_prediction_subtitle_text">Weather Forecast upcoming 5-days</string>
+    <string name="check_weather_prediction">Weather prediction</string>
 </resources>

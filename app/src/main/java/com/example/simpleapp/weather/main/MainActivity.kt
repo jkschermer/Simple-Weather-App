@@ -31,9 +31,11 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.component.KoinComponent
 import simpleapp.presentation.generic.UIState
+import simpleapp.presentation.navigation.WeatherNavigationEvent
 import simpleapp.presentation.weather.DateUIMapper
 import simpleapp.presentation.weather.DateUIModel
 import simpleapp.presentation.weather.WeatherInfoUIModel
@@ -57,6 +59,8 @@ class MainActivity : ComponentActivity(), KoinComponent {
     }
 
     companion object {
+
+        private const val PREDICTION_INTENT_EXTRA = "PREDICTION_INTENT_EXTRA"
         fun createIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
         }
@@ -75,6 +79,15 @@ fun MainScreen(
     val date = viewModel.date.collectAsState()
     val state = viewModel.state.collectAsState()
     var city: String by rememberSaveable { mutableStateOf("") }
+    val navigation = viewModel.navigation.collectAsState(initial = null)
+
+    LaunchedEffect(navigation.value) {
+        navigation.value.let { event ->
+            if (event == WeatherNavigationEvent.OpenWeatherPredictionScreen) {
+                destinationsNavigator.navigate(WeatherPredictionScreenDestination)
+            }
+        }
+    }
 
     Scaffold(
         topBar = { MainToolbar() },
@@ -95,7 +108,7 @@ fun MainScreen(
             uiState = state.value,
             weatherInfoUIModel = weather.value,
             dateUIModel = date.value,
-            onPredictionClick = { destinationsNavigator.navigate(WeatherPredictionScreenDestination) },
+            onPredictionClick = { viewModel.navigateToWeatherPrediction(city = city) },
             modifier = Modifier.padding(paddingValues = padding)
         )
     }
