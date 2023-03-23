@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.SimpleApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.SimpleApp.ActionBar" parent="android:Theme.Material.Light.NoActionBar" />
     <style name="Theme.SimpleApp.SplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenAnimatedIcon">@drawable/globalweather4</item>
         <item name="postSplashScreenTheme">@style/Theme.SimpleApp</item>
+    </style>
+    <style name="Theme.SimpleApp" parent="Theme.SimpleApp.ActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

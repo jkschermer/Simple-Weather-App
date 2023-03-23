@@ -1,31 +1,30 @@
 package simpleapp.presentation.weather
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import nl.simpleapp.domain.FetchWeather
 import nl.simpleapp.domain.time.FetchDate
-import simpleapp.presentation.generic.SingleLiveEvent
 import simpleapp.presentation.generic.UIState
-import simpleapp.presentation.navigation.WeatherNavigationAction
+import simpleapp.presentation.navigation.WeatherNavigationEvent
 
 class WeatherViewModel(
     private val fetchWeather: FetchWeather,
     private val fetchDate: FetchDate,
 ) : ViewModel() {
 
+    private val _city = MutableStateFlow("")
+    val city: StateFlow<String> = _city
+
     private val _state = MutableStateFlow(UIState.NORMAL)
     val state = _state.asStateFlow()
 
-    private val _navigation = SingleLiveEvent<WeatherNavigationAction>()
-    val navigation: LiveData<WeatherNavigationAction> = _navigation
-
     private val _weather = MutableStateFlow<WeatherInfoUIModel?>(null)
     val weather: StateFlow<WeatherInfoUIModel?> = _weather
+
+    private val _navigation = MutableSharedFlow<WeatherNavigationEvent>()
+    val navigation: SharedFlow<WeatherNavigationEvent> = _navigation
 
     private val _date = MutableStateFlow<DateUIModel?>(null)
     val date: StateFlow<DateUIModel?> = _date
@@ -40,6 +39,10 @@ class WeatherViewModel(
         }
     }
 
+    fun setCity(city: String) {
+        _city.value = city
+    }
+
     fun getWeather(city: String) {
         viewModelScope.launch {
             _state.value = UIState.LOADING
@@ -47,7 +50,9 @@ class WeatherViewModel(
         }
     }
 
-//    fun onItemClicked(weatherInfo: WeatherInfo) {
-//        _navigation.postValue(WeatherNavigationAction.OpenDetailWind(weatherInfo.main))
-//    }
+    fun navigateToWeatherPrediction() {
+        viewModelScope.launch {
+            _navigation.emit(WeatherNavigationEvent.OpenWeatherPredictionScreen)
+        }
+    }
 }

@@ -15,6 +15,12 @@ android {
     }
 
     buildTypes {
+        release {
+            buildConfigField("String", "API_KEY", "\"${project.properties["API_KEY"]}\"")
+        }
+        debug {
+            buildConfigField("String", "API_KEY", "\"${project.properties["API_KEY"]}\"")
+        }
     }
 
     productFlavors {
