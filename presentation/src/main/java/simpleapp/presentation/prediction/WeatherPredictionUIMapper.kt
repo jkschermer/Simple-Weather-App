@@ -1,4 +1,4 @@
-package simpleapp.presentation.weather
+package simpleapp.presentation.prediction
 
 import nl.simpleapp.domain.weather.model.WeatherForecastData
 import simpleapp.presentation.weather.WeatherInfoUIMapper.toDisplayString

@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -21,25 +20,21 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.R
 import com.example.simpleapp.SimpleAppTheme
+import com.example.simpleapp.generic.ui.ErrorContent
 import com.example.simpleapp.generic.ui.MainToolbar
 import com.example.simpleapp.theme.Spacing.x1
 import com.example.simpleapp.theme.Spacing.x2
 import com.example.simpleapp.weather.NavGraphs
 import com.example.simpleapp.weather.destinations.MainScreenDestination
-import com.example.simpleapp.weather.destinations.WeatherPredictionScreenDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.component.KoinComponent
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.navigation.WeatherNavigationEvent
-import simpleapp.presentation.weather.DateUIMapper
-import simpleapp.presentation.weather.DateUIModel
-import simpleapp.presentation.weather.WeatherInfoUIModel
-import simpleapp.presentation.weather.WeatherViewModel
+import simpleapp.presentation.weather.*
 
 class MainActivity : ComponentActivity(), KoinComponent {
 
@@ -72,19 +67,20 @@ class MainActivity : ComponentActivity(), KoinComponent {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    destinationsNavigator: DestinationsNavigator,
+    navigator: DestinationsNavigator,
     viewModel: WeatherViewModel = koinViewModel(),
 ) {
-    val weather = viewModel.weather.collectAsState()
-    val date = viewModel.date.collectAsState()
-    val state = viewModel.state.collectAsState()
-    var city: String by rememberSaveable { mutableStateOf("") }
-    val navigation = viewModel.navigation.collectAsState(initial = null)
+    val weather by viewModel.weather.collectAsState()
+    val date by viewModel.date.collectAsState()
+    val state by viewModel.state.collectAsState()
+    val city by viewModel.city.collectAsState()
+    val navigation by viewModel.navigation.collectAsState(initial = null)
+    val mainNavigator = remember(navigator) { MainNavigator(navigator) }
 
-    LaunchedEffect(navigation.value) {
-        navigation.value.let { event ->
+    LaunchedEffect(navigation) {
+        navigation.let { event ->
             if (event == WeatherNavigationEvent.OpenWeatherPredictionScreen) {
-                destinationsNavigator.navigate(WeatherPredictionScreenDestination)
+                mainNavigator.navigateToWeatherPrediction(cityArgs = CityArgs(city))
             }
         }
     }
@@ -93,35 +89,36 @@ fun MainScreen(
         topBar = { MainToolbar() },
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-    ) { padding ->
+    ) { paddingValues ->
         MainContent(
-            onWeatherClick = { viewModel.getWeather(city) },
-            InputField = { modifier ->
+            onCurrentWeatherClick = { viewModel.getWeather(city) },
+            inputField = {
                 TextField(
                     value = city,
-                    onValueChange = { city = it },
+                    onValueChange = viewModel::setCity,
                     label = { Text(stringResource(R.string.input_label_textfield)) },
-                    modifier = modifier,
+                    modifier = Modifier
+                        .padding(vertical = x2)
+                        .fillMaxWidth(),
                 )
             },
-            uiState = state.value,
-            weatherInfoUIModel = weather.value,
-            dateUIModel = date.value,
-            onPredictionClick = { viewModel.navigateToWeatherPrediction(city = city) },
-            modifier = Modifier.padding(paddingValues = padding)
+            uiState = state,
+            weatherInfoUIModel = weather,
+            dateUIModel = date,
+            onPredictionClick = { viewModel.navigateToWeatherPrediction() },
+            modifier = Modifier.padding(paddingValues)
         )
     }
 }
 
 @Composable
 fun MainContent(
-    onWeatherClick: () -> Unit,
-    InputField: @Composable ((Modifier) -> Unit),
     uiState: UIState,
     weatherInfoUIModel: WeatherInfoUIModel?,
     dateUIModel: DateUIModel?,
+    onCurrentWeatherClick: () -> Unit,
     onPredictionClick: () -> Unit,
+    inputField: @Composable (() -> Unit),
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -129,13 +126,9 @@ fun MainContent(
             .padding(horizontal = x2, vertical = x2)
             .fillMaxWidth()
     ) {
-        InputField(
-            Modifier
-                .padding(vertical = x2)
-                .fillMaxWidth()
-        )
+        inputField()
         Button(
-            onClick = { onWeatherClick() },
+            onClick = { onCurrentWeatherClick() },
             modifier = Modifier
                 .padding(bottom = x2)
                 .fillMaxWidth(),
@@ -168,9 +161,9 @@ private fun HandleState(
         UIState.NORMAL -> NormalContent(
             weatherInfoUIModel = weatherInfoUIModel,
             dateUIModel = dateUIModel,
-            onPredictionClick = onPredictionClick,
+            onPredictionClick = onPredictionClick
         )
-        UIState.LOADING -> LoadingContent()
+        UIState.LOADING -> CircularProgressIndicator()
         UIState.ERROR -> ErrorContent()
     }
 }
@@ -288,32 +281,22 @@ private fun NormalContent(
 }
 
 
-@Composable
-private fun LoadingContent() {
-    CircularProgressIndicator()
-}
-
-@Composable
-private fun ErrorContent() {
-    Text(stringResource(R.string.main_error_message))
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    SimpleAppTheme {
-        MainContent({}, {}, UIState.NORMAL, WeatherInfoUIModel(
-            "10.2",
-            "10.2",
-            "10.2",
-            "10.2",
-            "10.2",
-            "Clouds",
-            "Clouds",
-            "https://people.sc.fsu.edu/~jburkardt/data/png/ajou_logo.png",
-            "Amsterdam"
-        ), dateUIModel = DateUIModel("10", "10", "2023", "wednesday"), {}
-        )
-    }
+//    SimpleAppTheme {
+//        MainContent({}, {}, UIState.NORMAL, WeatherInfoUIModel(
+//            "10.2",
+//            "10.2",
+//            "10.2",
+//            "10.2",
+//            "10.2",
+//            "Clouds",
+//            "Clouds",
+//            "https://people.sc.fsu.edu/~jburkardt/data/png/ajou_logo.png",
+//            "Amsterdam"
+//        ), dateUIModel = DateUIModel("10", "10", "2023", "wednesday"), {}
+//        )
+//    }
 }
 

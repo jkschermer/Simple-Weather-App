@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import nl.simpleapp.domain.FetchWeather
-import nl.simpleapp.domain.FetchWeatherForecast
 import nl.simpleapp.domain.time.FetchDate
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.navigation.WeatherNavigationEvent
@@ -13,17 +12,16 @@ import simpleapp.presentation.navigation.WeatherNavigationEvent
 class WeatherViewModel(
     private val fetchWeather: FetchWeather,
     private val fetchDate: FetchDate,
-    private val fetchWeatherForecast: FetchWeatherForecast,
 ) : ViewModel() {
+
+    private val _city = MutableStateFlow("")
+    val city: StateFlow<String> = _city
 
     private val _state = MutableStateFlow(UIState.NORMAL)
     val state = _state.asStateFlow()
 
     private val _weather = MutableStateFlow<WeatherInfoUIModel?>(null)
     val weather: StateFlow<WeatherInfoUIModel?> = _weather
-
-    private val _weatherPrediction = MutableStateFlow<WeatherPredictionUIModel?>(null)
-    val weatherPrediction: StateFlow<WeatherPredictionUIModel?> = _weatherPrediction
 
     private val _navigation = MutableSharedFlow<WeatherNavigationEvent>()
     val navigation: SharedFlow<WeatherNavigationEvent> = _navigation
@@ -41,14 +39,8 @@ class WeatherViewModel(
         }
     }
 
-    private suspend fun setupWeatherPrediction(city: String) {
-        try {
-            _weatherPrediction.value =
-                WeatherPredictionUIMapper.mapToUIModel(fetchWeatherForecast(city))
-            _state.value = UIState.NORMAL
-        } catch (e: Exception) {
-            _state.value = UIState.ERROR
-        }
+    fun setCity(city: String) {
+        _city.value = city
     }
 
     fun getWeather(city: String) {
@@ -58,22 +50,9 @@ class WeatherViewModel(
         }
     }
 
-    fun getWeatherPrediction(city: String) {
-        viewModelScope.launch {
-            _state.value = UIState.LOADING
-        }
-    }
-
-    fun navigateBack() {
-        viewModelScope.launch {
-            _navigation.emit(WeatherNavigationEvent.NavigateBackToMain)
-        }
-    }
-
-    fun navigateToWeatherPrediction(city: String) {
+    fun navigateToWeatherPrediction() {
         viewModelScope.launch {
             _navigation.emit(WeatherNavigationEvent.OpenWeatherPredictionScreen)
-            setupWeatherPrediction(city)
         }
     }
 }

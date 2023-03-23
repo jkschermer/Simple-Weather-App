@@ -12,6 +12,6 @@ class FetchWeatherForecast(private val weatherForecastRepository: WeatherForecas
         val weatherForecast = weatherForecastRepository.fetchWeatherForecast(city)
         val now = Date()
         val fiveDaysFromNow = Date(now.time + TimeUnit.DAYS.toMillis(5))
-        return weatherForecast.filter { it.date in now..fiveDaysFromNow }
+        return weatherForecast
     }
 }

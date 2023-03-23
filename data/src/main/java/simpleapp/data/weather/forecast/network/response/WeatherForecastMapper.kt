@@ -8,18 +8,14 @@ import java.util.*
 
 object WeatherForecastMapper {
 
-    fun WeatherForecastListResponse.toWeatherForecast(): List<WeatherForecastData> {
-        return this.weatherForecastList.map { forecastResponse ->
+    fun WeatherForecastResponse.toWeatherForecast(): List<WeatherForecastData> {
+        return weatherForecastList.map {
             WeatherForecastData(
-                date = forecastResponse.dateResponse.toDate(),
-                weather = forecastResponse.weatherListResponse.toWeather(),
-                main = forecastResponse.mainResponse.toMain(),
-                wind = forecastResponse.windResponse.toWind()
+                date = Date(it.date),
+                weather = it.weather.toWeather(),
+                main = it.main.toMain(),
+                wind = it.wind.toWind()
             )
         }
-    }
-
-    private fun DateResponse.toDate(): Date {
-        return Date(this.dateLong)
     }
 }
