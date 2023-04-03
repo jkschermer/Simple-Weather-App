@@ -1,5 +1,5 @@
 # Weather App
-This is a simple weather app for Android built with Jetpack Compose and Clean Architecture. 
+This is a simple weather app for Android built with Jetpack Compose in Clean Architecture and uses the Raamcosta Library for Navigation. 
 The app displays the current weather and weather prediction for the upcoming 5 days. 
 It is designed to showcase how to use Jetpack Compose in combination with Clean Architecture to build a robust and scalable Android application.
 
@@ -38,6 +38,9 @@ Dependency Injection and HTTP calls
 
 **Coroutines:** 
 For managing asynchronous operations.
+
+**Raamcosta Navigation**
+For navigating in a type-safe manner
 
 ## Features
 The app has two screens:
