@@ -1,16 +1,37 @@
 package simpleapp.presentation.prediction
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import nl.simpleapp.domain.weather.model.WeatherForecastData
+import simpleapp.presentation.weather.WeatherInfoUIMapper.addIconToUrl
 import simpleapp.presentation.weather.WeatherInfoUIMapper.toDisplayString
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 object WeatherPredictionUIMapper {
 
-    private const val WEATHER_SEPARATOR = " "
-
+    @RequiresApi(Build.VERSION_CODES.O)
     fun mapToUIModel(weatherForecastData: List<WeatherForecastData>): WeatherPredictionUIModel {
-        return WeatherPredictionUIModel(
-            minTemp = weatherForecastData.minOf { it.main.temp_min.toDisplayString() },
-            maxTemp = weatherForecastData.maxOf { it.main.temp_max.toDisplayString() },
-            icon = weatherForecastData.joinToString { it.weather[0].icon })
+        val icons =
+            weatherForecastData.flatMap { icon -> icon.weather.map { it.icon.addIconToUrl() } }
+
+        val result = WeatherPredictionUIModel(
+            minTemp = weatherForecastData.map { it.main.temp_min.toDisplayString() },
+            maxTemp = weatherForecastData.map { it.main.temp_max.toDisplayString() },
+            dayOfWeek = weatherForecastData.map { it.date.toWeekDay() },
+            icon = icons
+        )
+        Log.d("Weather prediction UI Model", result.maxTemp.joinToString { it })
+        return result
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun Long.toWeekDay(): String {
+        return DateTimeFormatter.ofPattern("EEEE", Locale.getDefault())
+            .format(LocalDateTime.ofInstant(Instant.ofEpochSecond(this), ZoneId.systemDefault()))
     }
 }

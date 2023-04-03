@@ -15,13 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.R
 import com.example.simpleapp.SimpleAppTheme
-import com.example.simpleapp.generic.ui.ErrorContent
-import com.example.simpleapp.generic.ui.MainToolbar
+import com.example.simpleapp.generic.ui.*
 import com.example.simpleapp.theme.Spacing.x1
 import com.example.simpleapp.theme.Spacing.x2
 import com.example.simpleapp.weather.NavGraphs
@@ -208,7 +206,6 @@ private fun NormalContent(
                         Text(
                             text = weatherInfoUIModel.temperature,
                             style = MaterialTheme.typography.displayMedium,
-                            modifier = Modifier
                         )
                         Text(
                             text = stringResource(R.string.temperature_feels_like) + " " + weatherInfoUIModel.feelsLike,
@@ -231,14 +228,12 @@ private fun NormalContent(
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.size(imageSize)
                             )
-                            Text(
+                            Body1(
                                 text = weatherInfoUIModel.main,
-                                style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.padding(bottom = x1)
                             )
-                            Text(
+                            Body1(
                                 text = weatherInfoUIModel.description,
-                                style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.padding(bottom = x1)
                             )
                         }
@@ -246,26 +241,16 @@ private fun NormalContent(
                 }
             }
             item {
-                Text(
-                    text = weatherInfoUIModel.maxTemp,
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = Modifier
-                )
-                Text(
-                    text = stringResource(R.string.maximum_temp),
-                    style = MaterialTheme.typography.bodyLarge,
+                Subtitle1(text = weatherInfoUIModel.maxTemp, modifier = Modifier)
+                Body1StringRes(
+                    stringResId = R.string.maximum_temp,
                     modifier = Modifier.padding(bottom = x1)
                 )
             }
             item {
-                Text(
-                    text = weatherInfoUIModel.minTemp,
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = Modifier
-                )
-                Text(
-                    text = stringResource(R.string.maximum_temp),
-                    style = MaterialTheme.typography.bodyLarge,
+                Subtitle1(text = weatherInfoUIModel.minTemp, modifier = Modifier)
+                Body1StringRes(
+                    stringResId = R.string.min_temp,
                     modifier = Modifier.padding(bottom = x2)
                 )
             }
@@ -275,28 +260,5 @@ private fun NormalContent(
                 }
             }
         }
-    } else {
-        Text(stringResource(R.string.empty_string))
     }
 }
-
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-//    SimpleAppTheme {
-//        MainContent({}, {}, UIState.NORMAL, WeatherInfoUIModel(
-//            "10.2",
-//            "10.2",
-//            "10.2",
-//            "10.2",
-//            "10.2",
-//            "Clouds",
-//            "Clouds",
-//            "https://people.sc.fsu.edu/~jburkardt/data/png/ajou_logo.png",
-//            "Amsterdam"
-//        ), dateUIModel = DateUIModel("10", "10", "2023", "wednesday"), {}
-//        )
-//    }
-}
-
