@@ -51,8 +51,5 @@ This screen displays the weather prediction for the upcoming 5 days, including t
 ## API
 The app uses the OpenWeather API to retrieve weather data. To use the API, you'll need to obtain an API key from the OpenWeather website and add it to the local.properties file:
 
-makefile
-Copy code
-openWeatherApiKey=YOUR_API_KEY_HERE
 ## Conclusion
 This app serves as an example of how to build a well-structured and maintainable Android app using Jetpack Compose and Clean Architecture. 
