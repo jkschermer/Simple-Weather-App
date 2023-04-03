@@ -6,9 +6,7 @@ It is designed to showcase how to use Jetpack Compose in combination with Clean 
 ## Installation
 To build and run the app locally, follow these steps:
 
-1. Clone the repository to your local machine using Git:
-bash
-Copy code
+1. Clone the repository to your local machine using: 
 git clone https://github.com/jkschermer/SimpleApp.git
 2. Open the project in Android Studio.
 
