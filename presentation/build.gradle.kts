@@ -21,7 +21,6 @@ android {
         freeCompilerArgs = listOf("-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
         jvmTarget = Versions.JVM.toString()
     }
-    namespace = "nl.banktencate.presentation"
 }
 
 dependencies {
