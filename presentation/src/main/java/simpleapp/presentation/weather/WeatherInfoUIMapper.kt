@@ -25,7 +25,7 @@ object WeatherInfoUIMapper {
         return this.toString().plus(CELSIUS_SYMBOL)
     }
 
-    private fun String.addIconToUrl(): String {
+    fun String.addIconToUrl(): String {
         return "https://openweathermap.org/img/wn/$this@2x.png"
     }
 }
