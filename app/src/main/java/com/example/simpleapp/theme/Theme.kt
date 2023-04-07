@@ -1,4 +1,4 @@
-package com.example.simpleapp
+package com.example.simpleapp.theme
 
 import android.app.Activity
 import android.os.Build
@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
-import com.example.simpleapp.theme.*
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

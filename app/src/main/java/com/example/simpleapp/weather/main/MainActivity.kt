@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.R
-import com.example.simpleapp.SimpleAppTheme
+import com.example.simpleapp.theme.SimpleAppTheme
 import com.example.simpleapp.generic.ui.*
 import com.example.simpleapp.theme.Spacing.x1
 import com.example.simpleapp.theme.Spacing.x2
