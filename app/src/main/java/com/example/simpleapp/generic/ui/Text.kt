@@ -6,7 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.simpleapp.R
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun Subtitle1(text: String, modifier: Modifier = Modifier) {
@@ -27,9 +27,10 @@ fun Body1StringRes(@StringRes stringResId: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Body1(text: String, modifier: Modifier = Modifier) {
+fun Body1(text: String, modifier: Modifier = Modifier, textAlign: TextAlign = TextAlign.Center) {
     Text(
         text = text,
+        textAlign = textAlign,
         style = MaterialTheme.typography.bodyLarge,
         modifier = modifier
     )

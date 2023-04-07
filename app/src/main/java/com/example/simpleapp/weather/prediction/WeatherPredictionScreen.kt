@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.R
@@ -20,8 +21,10 @@ import com.example.simpleapp.generic.ui.Body1StringRes
 import com.example.simpleapp.generic.ui.ErrorContent
 import com.example.simpleapp.generic.ui.SecondaryToolbar
 import com.example.simpleapp.theme.Spacing.x2
+import com.example.simpleapp.theme.Spacing.x4
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import io.ktor.util.reflect.*
 import org.koin.androidx.compose.koinViewModel
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.navigation.WeatherNavigationEvent
@@ -120,7 +123,7 @@ private fun WeatherPredictionContentScreen(
         verticalArrangement = Arrangement.Center
     ) {
         item { Body1StringRes(R.string.weather_prediction_subtitle_text) }
-        item { Body1(cityArgs.city) }
+        item { Body1(cityArgs.city, modifier =  Modifier.padding(bottom = x4)) }
         items(weatherPredictionUIModel.icon.size) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -132,9 +135,9 @@ private fun WeatherPredictionContentScreen(
                     horizontalArrangement = Arrangement.SpaceAround,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Body1(weatherPredictionUIModel.minTemp[it])
-                    Body1(weatherPredictionUIModel.maxTemp[it])
-                    Body1(weatherPredictionUIModel.dayOfWeek[it])
+                    Body1(weatherPredictionUIModel.minTemp[it], textAlign = TextAlign.Start, modifier = Modifier.weight(1F))
+                    Body1(weatherPredictionUIModel.maxTemp[it], textAlign = TextAlign.Start, modifier = Modifier.weight(1F))
+                    Body1(weatherPredictionUIModel.dayOfWeek[it], textAlign = TextAlign.Start, modifier = Modifier.weight(1F))
                     Image(
                         painter = rememberAsyncImagePainter(weatherPredictionUIModel.icon[it]),
                         contentScale = ContentScale.Crop,
