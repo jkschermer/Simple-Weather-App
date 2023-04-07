@@ -34,8 +34,3 @@ fun Body1(text: String, modifier: Modifier = Modifier) {
         modifier = modifier
     )
 }
-
-@Composable
-fun ErrorContent() {
-    Text(stringResource(R.string.main_error_message))
-}

@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -27,6 +28,8 @@ import simpleapp.presentation.navigation.WeatherNavigationEvent
 import simpleapp.presentation.prediction.WeatherPredictionUIModel
 import simpleapp.presentation.prediction.WeatherPredictionViewModel
 import simpleapp.presentation.weather.CityArgs
+
+val ICON_SIZE =  Size(50.dp.value, 50.dp.value)
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Destination
@@ -135,7 +138,7 @@ private fun WeatherPredictionContentScreen(
                     Image(
                         painter = rememberAsyncImagePainter(weatherPredictionUIModel.icon[it]),
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(50.dp, 50.dp),
+                        modifier = Modifier.size(ICON_SIZE.width.dp, ICON_SIZE.height.dp),
                         contentDescription = null,
                     )
                 }
