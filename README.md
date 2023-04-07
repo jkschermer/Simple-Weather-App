@@ -3,6 +3,12 @@ This is a simple weather app for Android built with Jetpack Compose in Clean Arc
 The app displays the current weather and weather prediction for the upcoming 5 days. 
 It is designed to showcase how to use Jetpack Compose in combination with Clean Architecture to build a robust and scalable Android application.
 
+<div style="display:flex; justify-content:space-between;">
+<img src="splashscreen.png" alt="Splash Screen" width="250px">
+<img src="weather_main.png" alt="Main Screen" width="250px">
+<img src="weather_second.png" alt="Second Screen" width="250px">
+</div>
+
 ## Installation
 To build and run the app locally, follow these steps:
 
