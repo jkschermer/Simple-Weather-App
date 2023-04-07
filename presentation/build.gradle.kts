@@ -21,6 +21,8 @@ android {
         freeCompilerArgs = listOf("-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
         jvmTarget = Versions.JVM.toString()
     }
+
+    namespace = "simpleapp.presentation"
 }
 
 dependencies {
