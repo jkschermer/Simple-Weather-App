@@ -1,12 +1,12 @@
 # Weather App
 This is a simple weather app for Android built with Jetpack Compose in Clean Architecture and uses the Raamcosta Library for Navigation. 
-The app displays the current weather and weather prediction for the upcoming 5 days. 
+The app displays the current weather and weather prediction in any city for the upcoming 5 days. 
 It is designed to showcase how to use Jetpack Compose in combination with Clean Architecture to build a robust and scalable Android application.
 
 <div style="display:flex; justify-content:space-between;">
-<img src="splashscreen.png" alt="Splash Screen" height: "auto" width="200px">
-<img src="weather_main.png" alt="Main Screen" height: "auto" width="200px">
-<img src="weather_second.png" alt="Second Screen" height: "auto" width="200px">
+<img src="splashscreen.png" alt="Splash Screen" height: "auto" width="175px">
+<img src="weather_main.png" alt="Main Screen" height: "auto" width="175px">
+<img src="weather_second.png" alt="Second Screen" height: "auto" width="175px">
 </div>
 
 ## Installation
