@@ -13,7 +13,7 @@ It is designed to showcase how to use Jetpack Compose in combination with Clean 
 To build and run the app locally, follow these steps:
 
 1. Clone the repository to your local machine using: 
-git clone https://github.com/jkschermer/SimpleApp.git
+git clone https://github.com/jkschermer/Simple-Weather-App.git
 2. Open the project in Android Studio.
 
 3. Build and run the app using the emulator or a physical device.
