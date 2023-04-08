@@ -66,7 +66,7 @@ fun AppToolbar(
 fun MainToolbar() {
     AppToolbar(
         textResId = R.string.homescreen_toolbar_title,
-        iconResId = R.drawable.globalweather,
+        iconResId = R.drawable.ic_logo_round,
         alignment = Alignment.CenterStart,
         textColor = MaterialTheme.colorScheme.background,
         onIconClick = { },

@@ -85,8 +85,7 @@ fun MainScreen(
 
     Scaffold(
         topBar = { MainToolbar() },
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+        modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) { paddingValues ->
         MainContent(
             onCurrentWeatherClick = { viewModel.getWeather(city) },

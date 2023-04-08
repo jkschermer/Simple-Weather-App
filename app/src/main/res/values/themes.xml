@@ -3,7 +3,7 @@
 
     <style name="Theme.SimpleApp.ActionBar" parent="android:Theme.Material.Light.NoActionBar" />
     <style name="Theme.SimpleApp.SplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/globalweather4</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_logo_foreground</item>
         <item name="postSplashScreenTheme">@style/Theme.SimpleApp</item>
     </style>
     <style name="Theme.SimpleApp" parent="Theme.SimpleApp.ActionBar">
