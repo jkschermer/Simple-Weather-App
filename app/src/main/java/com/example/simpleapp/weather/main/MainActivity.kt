@@ -211,6 +211,11 @@ private fun NormalContent(
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(bottom = x1)
                         )
+                        Text(
+                            text = weatherInfoUIModel.wind,
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(bottom = x1)
+                        )
                     }
                     BoxWithConstraints(
                         modifier = Modifier.weight(1F)

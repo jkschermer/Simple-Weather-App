@@ -6,6 +6,7 @@ data class WeatherInfoUIModel(
     val minTemp: String,
     val maxTemp: String,
     val humidity: String,
+    val wind: String,
     val main: String,
     val description: String,
     val icon: String,
