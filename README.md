@@ -4,9 +4,10 @@ The app displays the current weather and weather prediction in any city for the 
 It is designed to showcase how to use Jetpack Compose in combination with Clean Architecture to build a robust and scalable Android application.
 
 <div style="display:flex; justify-content:space-between;">
-<img src="splashscreen.png" alt="Splash Screen" height: "auto" width="175px">
-<img src="main_screen.png" alt="Main Screen" height: "auto" width="175px">
-<img src="weather_second.png" alt="Second Screen" height: "auto" width="175px">
+<img src="splashscreen.png" alt="Splash Screen" height="auto" width="175px">
+<img src="main_screen.png" alt="Main Screen" height="auto" width="175px">
+<img src="main_screen_content.png" alt="Main Screen" height="auto" width="175px">
+<img src="weather_second.png" alt="Second Screen" height="auto" width="175px">
 </div>
 
 ## Installation
