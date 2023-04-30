@@ -18,8 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.R
-import com.example.simpleapp.theme.SimpleAppTheme
 import com.example.simpleapp.generic.ui.*
+import com.example.simpleapp.theme.SimpleAppTheme
 import com.example.simpleapp.theme.Spacing.x1
 import com.example.simpleapp.theme.Spacing.x2
 import com.example.simpleapp.weather.NavGraphs
@@ -53,7 +53,6 @@ class MainActivity : ComponentActivity(), KoinComponent {
 
     companion object {
 
-        private const val PREDICTION_INTENT_EXTRA = "PREDICTION_INTENT_EXTRA"
         fun createIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
         }
@@ -78,7 +77,8 @@ fun MainScreen(
     LaunchedEffect(navigation) {
         navigation.let { event ->
             if (event == WeatherNavigationEvent.OpenWeatherPredictionScreen) {
-                mainNavigator.navigateToWeatherPrediction(cityArgs = CityArgs(city))
+                weather?.let { CityArgs(it.name) }
+                    ?.let { mainNavigator.navigateToWeatherPrediction(cityArgs = it) }
             }
         }
     }
