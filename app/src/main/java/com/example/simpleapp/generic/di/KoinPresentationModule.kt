@@ -7,5 +7,5 @@ import simpleapp.presentation.weather.WeatherViewModel
 
 val presentationModule = module {
     viewModel { WeatherViewModel(get(), get()) }
-    viewModel { WeatherPredictionViewModel(get()) }
+    viewModel { WeatherPredictionViewModel(get(), get()) }
 }

@@ -8,11 +8,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import nl.simpleapp.domain.FetchWeatherForecast
+import nl.simpleapp.domain.city.FetchImage
 import simpleapp.presentation.generic.UIState
+import simpleapp.presentation.image.ImageUIMapper
+import simpleapp.presentation.image.ImageUIModel
 import simpleapp.presentation.navigation.WeatherNavigationEvent
 
 class WeatherPredictionViewModel(
-    private val fetchWeatherForecast: FetchWeatherForecast
+    private val fetchWeatherForecast: FetchWeatherForecast,
+    private val fetchImage: FetchImage
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(UIState.NORMAL)
@@ -20,6 +24,9 @@ class WeatherPredictionViewModel(
 
     private val _weatherPrediction = MutableStateFlow<WeatherPredictionUIModel?>(null)
     val weatherPrediction: StateFlow<WeatherPredictionUIModel?> = _weatherPrediction
+
+    private val _imageUIModel = MutableStateFlow<ImageUIModel?>(null)
+    val imageUIModel: StateFlow<ImageUIModel?> = _imageUIModel
 
     private val _navigation = MutableSharedFlow<WeatherNavigationEvent>()
     val navigation: SharedFlow<WeatherNavigationEvent> = _navigation
@@ -41,6 +48,23 @@ class WeatherPredictionViewModel(
         viewModelScope.launch {
             _state.value = UIState.LOADING
             setupWeatherPrediction(city)
+        }
+    }
+
+    private suspend fun setupCityImage(city: String) {
+        try {
+            _imageUIModel.value = fetchImage.invoke(city)?.let { ImageUIMapper.mapToUIModel(it) }
+            _state.value = UIState.NORMAL
+        } catch (exception: Exception) {
+            Log.e("error message", exception.toString())
+            _state.value = UIState.ERROR
+        }
+    }
+
+    suspend fun getCityImage(city: String) {
+        viewModelScope.launch {
+            _state.value = UIState.LOADING
+            setupCityImage(city)
         }
     }
 

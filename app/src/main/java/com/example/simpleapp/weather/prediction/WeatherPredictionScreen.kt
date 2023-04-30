@@ -20,13 +20,15 @@ import com.example.simpleapp.generic.ui.Body1
 import com.example.simpleapp.generic.ui.Body1StringRes
 import com.example.simpleapp.generic.ui.ErrorContent
 import com.example.simpleapp.generic.ui.SecondaryToolbar
+import com.example.simpleapp.theme.Spacing.x1
 import com.example.simpleapp.theme.Spacing.x2
-import com.example.simpleapp.theme.Spacing.x4
+import com.example.simpleapp.theme.Spacing.x3
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.ktor.util.reflect.*
 import org.koin.androidx.compose.koinViewModel
 import simpleapp.presentation.generic.UIState
+import simpleapp.presentation.image.ImageUIModel
 import simpleapp.presentation.navigation.WeatherNavigationEvent
 import simpleapp.presentation.prediction.WeatherPredictionUIModel
 import simpleapp.presentation.prediction.WeatherPredictionViewModel
@@ -41,11 +43,12 @@ val ICON_SIZE = Size(50.dp.value, 50.dp.value)
 fun WeatherPredictionScreen(
     navigator: DestinationsNavigator,
     cityArgs: CityArgs,
-    viewModel: WeatherPredictionViewModel = koinViewModel()
+    viewModel: WeatherPredictionViewModel = koinViewModel(),
 ) {
     val navigation by viewModel.navigation.collectAsState(initial = null)
     val predictionNavigator = remember(navigator) { PredictionNavigator(navigator) }
     val weatherPredictionUIModel by viewModel.weatherPrediction.collectAsState()
+    val imageUIModel by viewModel.imageUIModel.collectAsState()
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(navigation) {
@@ -54,6 +57,7 @@ fun WeatherPredictionScreen(
                 predictionNavigator.navigateBackToMain()
             } else {
                 cityArgs.city.let(viewModel::getWeatherPrediction)
+                viewModel.getCityImage(cityArgs.city)
             }
         }
     }
@@ -65,6 +69,7 @@ fun WeatherPredictionScreen(
         MainContent(
             uiState = state,
             weatherPredictionUIModel = weatherPredictionUIModel,
+            imageUIModel = imageUIModel,
             cityArgs = cityArgs,
             modifier = Modifier.padding(it)
         )
@@ -75,12 +80,14 @@ fun WeatherPredictionScreen(
 private fun MainContent(
     uiState: UIState,
     weatherPredictionUIModel: WeatherPredictionUIModel?,
+    imageUIModel: ImageUIModel?,
     cityArgs: CityArgs,
     modifier: Modifier = Modifier
 ) {
     HandleState(
         uiState = uiState,
         weatherPredictionUIModel = weatherPredictionUIModel,
+        imageUIModel = imageUIModel,
         cityArgs = cityArgs,
         modifier = modifier
             .fillMaxWidth()
@@ -92,6 +99,7 @@ private fun MainContent(
 private fun HandleState(
     uiState: UIState,
     weatherPredictionUIModel: WeatherPredictionUIModel?,
+    imageUIModel: ImageUIModel?,
     cityArgs: CityArgs,
     modifier: Modifier = Modifier
 ) {
@@ -101,6 +109,7 @@ private fun HandleState(
                 WeatherPredictionContentScreen(
                     weatherPredictionUIModel = it,
                     cityArgs = cityArgs,
+                    imageUIModel = imageUIModel,
                     modifier = modifier
                 )
             }
@@ -113,6 +122,7 @@ private fun HandleState(
 @Composable
 private fun WeatherPredictionContentScreen(
     weatherPredictionUIModel: WeatherPredictionUIModel,
+    imageUIModel: ImageUIModel?,
     cityArgs: CityArgs,
     modifier: Modifier = Modifier,
 ) {
@@ -122,8 +132,19 @@ private fun WeatherPredictionContentScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        item { Body1StringRes(R.string.weather_prediction_subtitle_text) }
-        item { Body1(cityArgs.city, modifier = Modifier.padding(bottom = x4)) }
+        item {
+            Text(
+                text = cityArgs.city,
+                style = MaterialTheme.typography.displaySmall,
+                modifier = Modifier.padding(vertical = x1)
+            )
+        }
+        item {
+            Body1StringRes(
+                R.string.weather_prediction_subtitle_text,
+                modifier = Modifier.padding(bottom = x2)
+            )
+        }
         items(weatherPredictionUIModel.icon.size) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -161,5 +182,26 @@ private fun WeatherPredictionContentScreen(
                 }
             }
         }
+        item {
+            DisplayCityImage(imageUIModel = imageUIModel)
+        }
+    }
+}
+
+@Composable
+private fun DisplayCityImage(
+    imageUIModel: ImageUIModel?,
+    modifier: Modifier = Modifier
+) {
+    if (imageUIModel != null) {
+        Image(
+            painter = rememberAsyncImagePainter(model = imageUIModel.imageUrl),
+            contentDescription = "city",
+            contentScale = ContentScale.Fit,
+            modifier = modifier
+                .size(200.dp)
+                .aspectRatio(1F)
+                .padding(vertical = x3)
+        )
     }
 }

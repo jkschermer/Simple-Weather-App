@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Weather App</string>
     <string name="weather_today_button">Check Current Weather of any city</string>
-    <string name="homescreen_toolbar_title">Simple Weather App</string>
+    <string name="homescreen_toolbar_title">Weather App</string>
     <string name="empty_string" />
     <string name="main_error_message">Please enter the correct city</string>
     <string name="input_label_textfield">Enter a city</string>
@@ -12,6 +12,6 @@
     <string name="weather_description">Weather</string>
     <string name="weather_forecast_button">5-day Weather Forecast</string>
     <string name="weather_prediction_screen_toolbar">Weather Forecast</string>
-    <string name="weather_prediction_subtitle_text">Weather Forecast upcoming 5-days</string>
+    <string name="weather_prediction_subtitle_text">5-day prediction</string>
     <string name="check_weather_prediction">Weather prediction</string>
 </resources>

@@ -17,9 +17,12 @@ android {
     buildTypes {
         release {
             buildConfigField("String", "API_KEY", "\"${project.properties["API_KEY"]}\"")
+            buildConfigField ("String", "API_KEY_IMAGES", "\"${project.properties["API_KEY_IMAGES"]}\""
+            )
         }
         debug {
             buildConfigField("String", "API_KEY", "\"${project.properties["API_KEY"]}\"")
+            buildConfigField("String", "API_KEY_IMAGES", "\"${project.properties["API_KEY_IMAGES"]}\"")
         }
     }
 
