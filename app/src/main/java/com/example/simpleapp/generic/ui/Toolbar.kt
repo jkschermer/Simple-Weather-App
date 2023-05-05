@@ -1,7 +1,6 @@
 package com.example.simpleapp.generic.ui
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,8 +26,8 @@ import com.example.simpleapp.theme.Spacing.x8
 
 @Composable
 fun AppToolbar(
-    @StringRes textResId: Int,
     @DrawableRes iconResId: Int,
+    text: String,
     alignment: Alignment,
     textColor: Color,
     onIconClick: () -> Unit,
@@ -53,7 +52,7 @@ fun AppToolbar(
                 .padding(start = x1)
         )
         Text(
-            text = stringResource(textResId),
+            text = text,
             style = MaterialTheme.typography.bodyLarge.merge(TextStyle(fontWeight = FontWeight.Bold)),
             color = textColor,
             textAlign = TextAlign.Center,
@@ -65,7 +64,7 @@ fun AppToolbar(
 @Composable
 fun MainToolbar() {
     AppToolbar(
-        textResId = R.string.homescreen_toolbar_title,
+        text = stringResource(R.string.homescreen_toolbar_title),
         iconResId = R.drawable.ic_logo_round,
         alignment = Alignment.CenterStart,
         textColor = MaterialTheme.colorScheme.background,
@@ -76,10 +75,11 @@ fun MainToolbar() {
 
 @Composable
 fun SecondaryToolbar(
+    text: String? = null,
     onClick: () -> Unit
 ) {
     AppToolbar(
-        textResId = R.string.weather_prediction_screen_toolbar,
+        text = stringResource(R.string.weather_prediction_screen_toolbar) + " " + text,
         iconResId = R.drawable.ic_arrow_back,
         textColor = MaterialTheme.colorScheme.background,
         alignment = Alignment.CenterStart,
@@ -93,7 +93,7 @@ fun SecondaryToolbar(
 private fun PreviewToolbar() {
     SimpleAppTheme(darkTheme = true) {
         AppToolbar(
-            textResId = R.string.homescreen_toolbar_title,
+            text = stringResource(R.string.homescreen_toolbar_title),
             iconResId = R.drawable.globalweather,
             alignment = Alignment.CenterStart,
             textColor = MaterialTheme.colorScheme.background,

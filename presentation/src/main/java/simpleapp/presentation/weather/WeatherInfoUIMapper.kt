@@ -6,6 +6,7 @@ object WeatherInfoUIMapper {
 
     private const val WEATHER_SEPARATOR = " "
     private const val CELSIUS_SYMBOL = "°"
+    private const val PERCENTAGE_SYMBOL = "%"
 
     fun mapToUIModel(currentWeatherData: CurrentWeatherData): WeatherInfoUIModel {
         return WeatherInfoUIModel(
@@ -14,7 +15,7 @@ object WeatherInfoUIMapper {
             minTemp = currentWeatherData.main.temp_min.toDisplayString(),
             maxTemp = currentWeatherData.main.temp_max.toDisplayString(),
             wind = categorizeWind(currentWeatherData.wind.speed),
-            humidity = currentWeatherData.main.humidity.toString(),
+            humidity = currentWeatherData.main.humidity.toString().plus(PERCENTAGE_SYMBOL),
             main = currentWeatherData.weather.joinToString(separator = WEATHER_SEPARATOR) { weather -> weather.main.replaceFirstChar { it.uppercase() } },
             description = currentWeatherData.weather.joinToString(separator = WEATHER_SEPARATOR) { weather -> weather.description.replaceFirstChar { it.uppercase() } },
             icon = currentWeatherData.weather.joinToString(separator = WEATHER_SEPARATOR) { it.icon.addIconToUrl() },

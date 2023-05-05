@@ -63,7 +63,7 @@ fun WeatherPredictionScreen(
     }
 
     Scaffold(
-        topBar = { SecondaryToolbar(onClick = viewModel::navigateBack) },
+        topBar = { SecondaryToolbar(text = cityArgs.city, onClick = viewModel::navigateBack) },
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) {
         MainContent(
@@ -193,15 +193,19 @@ private fun DisplayCityImage(
     imageUIModel: ImageUIModel?,
     modifier: Modifier = Modifier
 ) {
-    if (imageUIModel != null) {
-        Image(
-            painter = rememberAsyncImagePainter(model = imageUIModel.imageUrl),
-            contentDescription = "city",
-            contentScale = ContentScale.Fit,
-            modifier = modifier
-                .size(200.dp)
-                .aspectRatio(1F)
-                .padding(vertical = x3)
-        )
+    imageUIModel.let {
+        if (it != null) {
+            Image(
+                painter = rememberAsyncImagePainter(model = it.imageUrl),
+                contentDescription = "city",
+                contentScale = ContentScale.Fit,
+                modifier = modifier
+                    .size(200.dp)
+                    .aspectRatio(1F)
+                    .padding(vertical = x3)
+            )
+        } else {
+            CircularProgressIndicator(modifier = modifier.wrapContentSize())
+        }
     }
 }

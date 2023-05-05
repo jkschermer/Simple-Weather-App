@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.simpleapp.R
@@ -182,6 +183,7 @@ private fun NormalContent(
                 Text(
                     text = weatherInfoUIModel.name,
                     style = MaterialTheme.typography.displaySmall,
+                    textAlign = TextAlign.Center,
                     modifier = Modifier.padding(bottom = x2)
                 )
             }
@@ -255,6 +257,13 @@ private fun NormalContent(
                 Subtitle1(text = weatherInfoUIModel.minTemp, modifier = Modifier)
                 Body1StringRes(
                     stringResId = R.string.min_temp,
+                    modifier = Modifier.padding(bottom = x2)
+                )
+            }
+            item {
+                Subtitle1(text = weatherInfoUIModel.humidity, modifier = Modifier)
+                Body1StringRes(
+                    stringResId = R.string.humidity_description,
                     modifier = Modifier.padding(bottom = x2)
                 )
             }
