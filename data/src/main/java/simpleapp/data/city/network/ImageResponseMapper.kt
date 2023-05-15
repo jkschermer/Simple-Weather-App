@@ -5,10 +5,9 @@ import simpleapp.data.city.network.response.ImageWrapperResponse
 
 object ImageResponseMapper {
 
-    fun ImageWrapperResponse.toImage(): Image? {
-        val maximumLikes = hits.maxByOrNull { it.likes }
+    fun ImageWrapperResponse.toImage(): Image {
 
-        return maximumLikes?.let {
+        return hits.random().let {
             Image(
                 id = it.id,
                 name = it.tags,
