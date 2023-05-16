@@ -90,7 +90,7 @@ fun MainScreen(
     ) { paddingValues ->
         MainContent(
             onCurrentWeatherClick = { viewModel.getWeather(city) },
-            inputField = {
+            InputField = {
                 TextField(
                     value = city,
                     onValueChange = viewModel::setCity,
@@ -116,20 +116,19 @@ fun MainContent(
     dateUIModel: DateUIModel?,
     onCurrentWeatherClick: () -> Unit,
     onPredictionClick: () -> Unit,
-    inputField: @Composable (() -> Unit),
+    InputField: @Composable (() -> Unit),
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
-            .padding(horizontal = x2, vertical = x2)
+            .padding(horizontal = x2)
             .fillMaxWidth()
     ) {
-        inputField()
+        InputField()
         Button(
             onClick = { onCurrentWeatherClick() },
             modifier = Modifier
-                .padding(bottom = x2)
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Text(text = stringResource(R.string.weather_today_button))
         }
@@ -184,7 +183,7 @@ private fun NormalContent(
                     text = weatherInfoUIModel.name,
                     style = MaterialTheme.typography.displaySmall,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(bottom = x2)
+                    modifier = Modifier.padding(vertical = x2)
                 )
             }
             item {
@@ -268,8 +267,13 @@ private fun NormalContent(
                 )
             }
             item {
-                Button(onClick = { onPredictionClick() }) {
-                    Text(text = stringResource(R.string.weather_forecast_button))
+                Button(
+                    onClick = { onPredictionClick() },
+                    modifier = Modifier.padding(bottom = x2)
+                ) {
+                    Text(
+                        text = stringResource(R.string.weather_forecast_button)
+                    )
                 }
             }
         }
