@@ -2,7 +2,7 @@ package simpleapp.data.weather.network
 
 import nl.simpleapp.domain.weather.model.Main
 import nl.simpleapp.domain.weather.model.Weather
-import nl.simpleapp.domain.weather.model.CurrentWeatherData
+import nl.simpleapp.domain.weather.current.model.CurrentWeatherData
 import nl.simpleapp.domain.weather.model.Wind
 import simpleapp.data.weather.network.response.MainResponse
 import simpleapp.data.weather.network.response.WeatherInfoResponse

@@ -1,4 +1,4 @@
-package simpleapp.presentation.prediction
+package simpleapp.presentation.weather.prediction
 
 import android.os.Build
 import android.util.Log
@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import nl.simpleapp.domain.FetchWeatherForecast
+import nl.simpleapp.domain.weather.forecast.FetchWeatherForecast
 import nl.simpleapp.domain.city.FetchImage
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.image.ImageUIMapper
 import simpleapp.presentation.image.ImageUIModel
 import simpleapp.presentation.navigation.WeatherNavigationEvent
+import simpleapp.presentation.weather.prediction.model.WeatherPredictionUIModel
 
 class WeatherPredictionViewModel(
     private val fetchWeatherForecast: FetchWeatherForecast,

@@ -30,8 +30,8 @@ import org.koin.androidx.compose.koinViewModel
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.image.ImageUIModel
 import simpleapp.presentation.navigation.WeatherNavigationEvent
-import simpleapp.presentation.prediction.WeatherPredictionUIModel
-import simpleapp.presentation.prediction.WeatherPredictionViewModel
+import simpleapp.presentation.weather.prediction.model.WeatherPredictionUIModel
+import simpleapp.presentation.weather.prediction.WeatherPredictionViewModel
 import simpleapp.presentation.weather.CityArgs
 
 val ICON_SIZE = Size(50.dp.value, 50.dp.value)

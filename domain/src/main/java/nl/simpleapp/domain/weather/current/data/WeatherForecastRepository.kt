@@ -1,6 +1,6 @@
-package nl.simpleapp.domain.weather.data
+package nl.simpleapp.domain.weather.current.data
 
-import nl.simpleapp.domain.weather.model.WeatherForecastData
+import nl.simpleapp.domain.weather.forecast.model.WeatherForecastData
 
 interface WeatherForecastRepository {
 

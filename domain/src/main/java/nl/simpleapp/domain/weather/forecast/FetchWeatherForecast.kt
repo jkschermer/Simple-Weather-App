@@ -1,10 +1,10 @@
-package nl.simpleapp.domain
+package nl.simpleapp.domain.weather.forecast
 
 
-import nl.simpleapp.domain.weather.data.WeatherForecastRepository
+import nl.simpleapp.domain.weather.current.data.WeatherForecastRepository
 import nl.simpleapp.domain.weather.model.Main
 import nl.simpleapp.domain.weather.model.Weather
-import nl.simpleapp.domain.weather.model.WeatherForecastData
+import nl.simpleapp.domain.weather.forecast.model.WeatherForecastData
 
 class FetchWeatherForecast(private val weatherForecastRepository: WeatherForecastRepository) {
 
@@ -50,24 +50,24 @@ class FetchWeatherForecast(private val weatherForecastRepository: WeatherForecas
         }
         return result
     }
-}
 
-private fun selectMostCommonWeatherIcon(icons: List<String>, frequencyMap: HashMap<String, Int>): String? {
-    var icon: String? = null
-    var max = 0
+    private fun selectMostCommonWeatherIcon(icons: List<String>, frequencyMap: HashMap<String, Int>): String? {
+        var icon: String? = null
+        var max = 0
 
-    for (value in icons) {
-        frequencyMap[value] = frequencyMap.getOrDefault(value, 0) + 1
-    }
+        for (value in icons) {
+            frequencyMap[value] = frequencyMap.getOrDefault(value, 0) + 1
+        }
 
-    for (value in frequencyMap.keys) {
-        val frequency = frequencyMap[value]
-        if (frequency != null) {
-            if (frequency > max) {
-                max = frequency
-                icon = value
+        for (value in frequencyMap.keys) {
+            val frequency = frequencyMap[value]
+            if (frequency != null) {
+                if (frequency > max) {
+                    max = frequency
+                    icon = value
+                }
             }
         }
+        return icon
     }
-    return icon
 }

@@ -1,4 +1,4 @@
-package simpleapp.presentation.weather
+package simpleapp.presentation.weather.current.model
 
 data class WeatherInfoUIModel(
     val temperature: String,

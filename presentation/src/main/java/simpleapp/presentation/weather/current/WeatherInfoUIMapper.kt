@@ -1,6 +1,7 @@
-package simpleapp.presentation.weather
+package simpleapp.presentation.weather.current
 
-import nl.simpleapp.domain.weather.model.CurrentWeatherData
+import nl.simpleapp.domain.weather.current.model.CurrentWeatherData
+import simpleapp.presentation.weather.current.model.WeatherInfoUIModel
 
 object WeatherInfoUIMapper {
 

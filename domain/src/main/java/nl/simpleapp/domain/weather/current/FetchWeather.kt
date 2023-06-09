@@ -1,8 +1,8 @@
-package nl.simpleapp.domain
+package nl.simpleapp.domain.weather.current
 
 
-import nl.simpleapp.domain.weather.data.WeatherRepository
-import nl.simpleapp.domain.weather.model.CurrentWeatherData
+import nl.simpleapp.domain.weather.forecast.data.WeatherRepository
+import nl.simpleapp.domain.weather.current.model.CurrentWeatherData
 
 class FetchWeather(private val weatherRepository: WeatherRepository) {
 

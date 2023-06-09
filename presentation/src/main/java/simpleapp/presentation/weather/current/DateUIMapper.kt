@@ -1,6 +1,7 @@
-package simpleapp.presentation.weather
+package simpleapp.presentation.weather.current
 
 import android.annotation.SuppressLint
+import simpleapp.presentation.weather.current.model.DateUIModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle

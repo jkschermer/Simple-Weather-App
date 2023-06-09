@@ -1,4 +1,4 @@
-package simpleapp.presentation.weather
+package simpleapp.presentation.weather.current.model
 
 data class DateUIModel(
     val day: String,

@@ -2,7 +2,7 @@ package simpleapp.data.weather.network
 
 import android.util.Log
 import simpleapp.data.BuildConfig
-import simpleapp.data.generic.network.HttpClients
+import simpleapp.data.generic.HttpClients
 import simpleapp.data.weather.network.response.WeatherInfoResponse
 
 class WeatherService(private val httpClients: HttpClients) {

@@ -1,13 +1,15 @@
-package simpleapp.presentation.weather
+package simpleapp.presentation.weather.current
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import nl.simpleapp.domain.FetchWeather
+import nl.simpleapp.domain.weather.current.FetchWeather
 import nl.simpleapp.domain.time.FetchDate
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.navigation.WeatherNavigationEvent
+import simpleapp.presentation.weather.current.model.DateUIModel
+import simpleapp.presentation.weather.current.model.WeatherInfoUIModel
 
 class WeatherViewModel(
     private val fetchWeather: FetchWeather,

@@ -1,4 +1,4 @@
-package simpleapp.presentation.prediction
+package simpleapp.presentation.weather.prediction.model
 
 data class WeatherPredictionUIModel(
     val minTemp: List<String>,

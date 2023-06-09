@@ -1,11 +1,12 @@
-package simpleapp.presentation.prediction
+package simpleapp.presentation.weather.prediction
 
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import nl.simpleapp.domain.weather.model.WeatherForecastData
-import simpleapp.presentation.weather.WeatherInfoUIMapper.addIconToUrl
-import simpleapp.presentation.weather.WeatherInfoUIMapper.toDisplayString
+import nl.simpleapp.domain.weather.forecast.model.WeatherForecastData
+import simpleapp.presentation.weather.current.WeatherInfoUIMapper.addIconToUrl
+import simpleapp.presentation.weather.current.WeatherInfoUIMapper.toDisplayString
+import simpleapp.presentation.weather.prediction.model.WeatherPredictionUIModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId

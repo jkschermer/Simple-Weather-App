@@ -3,7 +3,7 @@ package simpleapp.data.city.network
 import android.util.Log
 import simpleapp.data.BuildConfig
 import simpleapp.data.city.network.response.ImageWrapperResponse
-import simpleapp.data.generic.network.HttpClients
+import simpleapp.data.generic.HttpClients
 
 class ImageService(private val httpClients: HttpClients) {
 

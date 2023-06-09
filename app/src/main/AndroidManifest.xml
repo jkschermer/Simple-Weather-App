@@ -17,7 +17,7 @@
         tools:targetApi="tiramisu">
 
         <activity
-            android:name=".weather.main.MainActivity">
+            android:name=".weather.current.MainActivity">
         </activity>
 
         <activity

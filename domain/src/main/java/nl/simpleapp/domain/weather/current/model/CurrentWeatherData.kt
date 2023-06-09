@@ -1,5 +1,8 @@
-package nl.simpleapp.domain.weather.model
+package nl.simpleapp.domain.weather.current.model
 
+import nl.simpleapp.domain.weather.model.Main
+import nl.simpleapp.domain.weather.model.Weather
+import nl.simpleapp.domain.weather.model.Wind
 import java.io.Serializable
 
 data class CurrentWeatherData(

@@ -1,4 +1,4 @@
-package simpleapp.data.generic.network
+package simpleapp.data.generic
 
 import android.util.Log
 import io.ktor.client.*
@@ -8,7 +8,7 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import nl.simpleapp.domain.generic.error.NetworkException
+import nl.simpleapp.domain.generic.NetworkException
 import java.io.IOException
 
 class HttpClients {

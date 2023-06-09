@@ -1,4 +1,4 @@
-package nl.simpleapp.domain.generic.error
+package nl.simpleapp.domain.generic
 
 import java.io.IOException
 

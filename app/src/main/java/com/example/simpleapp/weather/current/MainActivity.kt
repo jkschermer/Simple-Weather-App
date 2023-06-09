@@ -1,4 +1,4 @@
-package com.example.simpleapp.weather.main
+package com.example.simpleapp.weather.current
 
 import android.content.Context
 import android.content.Intent
@@ -34,6 +34,10 @@ import org.koin.core.component.KoinComponent
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.navigation.WeatherNavigationEvent
 import simpleapp.presentation.weather.*
+import simpleapp.presentation.weather.current.WeatherViewModel
+import simpleapp.presentation.weather.current.DateUIMapper
+import simpleapp.presentation.weather.current.model.DateUIModel
+import simpleapp.presentation.weather.current.model.WeatherInfoUIModel
 
 class MainActivity : ComponentActivity(), KoinComponent {
 

@@ -1,5 +1,8 @@
-package nl.simpleapp.domain.weather.model
+package nl.simpleapp.domain.weather.forecast.model
 
+import nl.simpleapp.domain.weather.model.Main
+import nl.simpleapp.domain.weather.model.Weather
+import nl.simpleapp.domain.weather.model.Wind
 import java.io.Serializable
 
 data class WeatherForecastData(

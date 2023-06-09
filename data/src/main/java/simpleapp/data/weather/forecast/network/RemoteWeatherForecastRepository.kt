@@ -1,8 +1,8 @@
-package simpleapp.data.weather.forecast.network.response
+package simpleapp.data.weather.forecast.network
 
-import nl.simpleapp.domain.weather.data.WeatherForecastRepository
-import nl.simpleapp.domain.weather.model.WeatherForecastData
-import simpleapp.data.weather.forecast.network.response.WeatherForecastMapper.toWeatherForecast
+import nl.simpleapp.domain.weather.current.data.WeatherForecastRepository
+import nl.simpleapp.domain.weather.forecast.model.WeatherForecastData
+import simpleapp.data.weather.forecast.network.WeatherForecastMapper.toWeatherForecast
 
 class RemoteWeatherForecastRepository(private val weatherForecastService: WeatherForecastService) :
     WeatherForecastRepository {

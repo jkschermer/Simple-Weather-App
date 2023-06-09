@@ -1,4 +1,4 @@
-package com.example.simpleapp.weather.main
+package com.example.simpleapp.weather.current
 
 import com.example.simpleapp.weather.destinations.WeatherPredictionScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
