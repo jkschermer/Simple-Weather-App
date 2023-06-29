@@ -23,8 +23,8 @@ class WeatherPredictionViewModel(
     private val _state = MutableStateFlow(UIState.NORMAL)
     val state = _state.asStateFlow()
 
-    private val _weatherPrediction = MutableStateFlow<WeatherPredictionUIModel?>(null)
-    val weatherPrediction: StateFlow<WeatherPredictionUIModel?> = _weatherPrediction
+    private val _weatherPrediction = MutableStateFlow<List<WeatherPredictionUIModel>>(emptyList())
+    val weatherPrediction: StateFlow<List<WeatherPredictionUIModel>> = _weatherPrediction
 
     private val _imageUIModel = MutableStateFlow<ImageUIModel?>(null)
     val imageUIModel: StateFlow<ImageUIModel?> = _imageUIModel

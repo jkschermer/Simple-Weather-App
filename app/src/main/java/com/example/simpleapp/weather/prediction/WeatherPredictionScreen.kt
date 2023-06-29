@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -47,7 +48,7 @@ fun WeatherPredictionScreen(
 ) {
     val navigation by viewModel.navigation.collectAsState(initial = null)
     val predictionNavigator = remember(navigator) { PredictionNavigator(navigator) }
-    val weatherPredictionUIModel by viewModel.weatherPrediction.collectAsState()
+    val weatherPredictions by viewModel.weatherPrediction.collectAsState()
     val imageUIModel by viewModel.imageUIModel.collectAsState()
     val state by viewModel.state.collectAsState()
 
@@ -68,7 +69,7 @@ fun WeatherPredictionScreen(
     ) {
         MainContent(
             uiState = state,
-            weatherPredictionUIModel = weatherPredictionUIModel,
+            weatherPredictionUIModel = weatherPredictions,
             imageUIModel = imageUIModel,
             cityArgs = cityArgs,
             modifier = Modifier.padding(it)
@@ -79,7 +80,7 @@ fun WeatherPredictionScreen(
 @Composable
 private fun MainContent(
     uiState: UIState,
-    weatherPredictionUIModel: WeatherPredictionUIModel?,
+    weatherPredictionUIModel: List<WeatherPredictionUIModel>,
     imageUIModel: ImageUIModel?,
     cityArgs: CityArgs,
     modifier: Modifier = Modifier
@@ -98,21 +99,19 @@ private fun MainContent(
 @Composable
 private fun HandleState(
     uiState: UIState,
-    weatherPredictionUIModel: WeatherPredictionUIModel?,
+    weatherPredictionUIModel: List<WeatherPredictionUIModel>,
     imageUIModel: ImageUIModel?,
     cityArgs: CityArgs,
     modifier: Modifier = Modifier
 ) {
     when (uiState) {
         UIState.NORMAL -> {
-            weatherPredictionUIModel?.let {
-                WeatherPredictionContentScreen(
-                    weatherPredictionUIModel = it,
-                    cityArgs = cityArgs,
-                    imageUIModel = imageUIModel,
-                    modifier = modifier
-                )
-            }
+            WeatherPredictionContentScreen(
+                weatherPredictionUIModel = weatherPredictionUIModel,
+                cityArgs = cityArgs,
+                imageUIModel = imageUIModel,
+                modifier = modifier
+            )
         }
         UIState.LOADING -> CircularProgressIndicator(modifier = modifier.wrapContentSize())
         UIState.ERROR -> ErrorContent()
@@ -121,7 +120,7 @@ private fun HandleState(
 
 @Composable
 private fun WeatherPredictionContentScreen(
-    weatherPredictionUIModel: WeatherPredictionUIModel,
+    weatherPredictionUIModel: List<WeatherPredictionUIModel>,
     imageUIModel: ImageUIModel?,
     cityArgs: CityArgs,
     modifier: Modifier = Modifier,
@@ -145,7 +144,7 @@ private fun WeatherPredictionContentScreen(
                 modifier = Modifier.padding(bottom = x2)
             )
         }
-        items(weatherPredictionUIModel.icon.size) {
+        itemsIndexed(weatherPredictionUIModel) { index, weather ->
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -159,22 +158,22 @@ private fun WeatherPredictionContentScreen(
                         .fillMaxWidth()
                 ) {
                     Body1(
-                        weatherPredictionUIModel.minTemp[it],
+                        weather.minTemp,
                         textAlign = TextAlign.Start,
                         modifier = Modifier.weight(0.65F)
                     )
                     Body1(
-                        weatherPredictionUIModel.maxTemp[it],
+                        weather.maxTemp,
                         textAlign = TextAlign.Start,
                         modifier = Modifier.weight(1F)
                     )
                     Body1(
-                        weatherPredictionUIModel.dayOfWeek[it],
+                        weather.dayOfWeek,
                         textAlign = TextAlign.Start,
                         modifier = Modifier.weight(1F)
                     )
                     Image(
-                        painter = rememberAsyncImagePainter(weatherPredictionUIModel.icon[it]),
+                        painter = rememberAsyncImagePainter(weather.icon),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.size(ICON_SIZE.width.dp, ICON_SIZE.height.dp),
                         contentDescription = null,

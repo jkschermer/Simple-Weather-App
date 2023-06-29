@@ -16,17 +16,16 @@ import java.util.*
 object WeatherPredictionUIMapper {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun mapToUIModel(weatherForecastData: List<WeatherForecastData>): WeatherPredictionUIModel {
-        val icons =
-            weatherForecastData.flatMap { icon -> icon.weather.map { it.icon.addIconToUrl() } }
-
-        val result = WeatherPredictionUIModel(
-            minTemp = weatherForecastData.map { it.main.temp_min.toDisplayString() },
-            maxTemp = weatherForecastData.map { it.main.temp_max.toDisplayString() },
-            dayOfWeek = weatherForecastData.map { it.date.toWeekDay() },
-            icon = icons
-        )
-        Log.d("Weather prediction UI Model", result.maxTemp.joinToString { it })
+    fun mapToUIModel(weatherForecastData: List<WeatherForecastData>): List<WeatherPredictionUIModel> {
+        val result = weatherForecastData.map {
+            WeatherPredictionUIModel(
+                minTemp = it.main.temp_min.toDisplayString(),
+                maxTemp = it.main.temp_max.toDisplayString(),
+                dayOfWeek = it.date.toWeekDay(),
+                icon = it.weather.single().icon.addIconToUrl()
+            )
+        }
+        Log.d("Weather prediction UI Model", result.toString())
         return result
     }
 
