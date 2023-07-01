@@ -82,8 +82,7 @@ fun MainScreen(
     LaunchedEffect(navigation) {
         navigation.let { event ->
             if (event == WeatherNavigationEvent.OpenWeatherPredictionScreen) {
-                weather?.let { CityArgs(it.name) }
-                    ?.let { mainNavigator.navigateToWeatherPrediction(cityArgs = it) }
+                mainNavigator.navigateToWeatherPrediction(city)
             }
         }
     }
@@ -97,7 +96,7 @@ fun MainScreen(
             InputField = {
                 TextField(
                     value = city,
-                    onValueChange = viewModel::setCity,
+                    onValueChange = { viewModel.city(it)} ,
                     label = { Text(stringResource(R.string.input_label_textfield)) },
                     modifier = Modifier
                         .padding(vertical = x2)

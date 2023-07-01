@@ -33,7 +33,6 @@ import simpleapp.presentation.image.ImageUIModel
 import simpleapp.presentation.navigation.WeatherNavigationEvent
 import simpleapp.presentation.weather.prediction.model.WeatherPredictionUIModel
 import simpleapp.presentation.weather.prediction.WeatherPredictionViewModel
-import simpleapp.presentation.weather.CityArgs
 
 val ICON_SIZE = Size(50.dp.value, 50.dp.value)
 
@@ -43,7 +42,7 @@ val ICON_SIZE = Size(50.dp.value, 50.dp.value)
 @Composable
 fun WeatherPredictionScreen(
     navigator: DestinationsNavigator,
-    cityArgs: CityArgs,
+    city: String,
     viewModel: WeatherPredictionViewModel = koinViewModel(),
 ) {
     val navigation by viewModel.navigation.collectAsState(initial = null)
@@ -57,21 +56,21 @@ fun WeatherPredictionScreen(
             if (it == WeatherNavigationEvent.NavigateBackToMain) {
                 predictionNavigator.navigateBackToMain()
             } else {
-                cityArgs.city.let(viewModel::getWeatherPrediction)
-                viewModel.getCityImage(cityArgs.city)
+                city.let(viewModel::getWeatherPrediction)
+                viewModel.getCityImage(city)
             }
         }
     }
 
     Scaffold(
-        topBar = { SecondaryToolbar(text = cityArgs.city, onClick = viewModel::navigateBack) },
+        topBar = { SecondaryToolbar(text = city, onClick = viewModel::navigateBack) },
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) {
         MainContent(
             uiState = state,
             weatherPredictionUIModel = weatherPredictions,
             imageUIModel = imageUIModel,
-            cityArgs = cityArgs,
+            city = city,
             modifier = Modifier.padding(it)
         )
     }
@@ -82,14 +81,14 @@ private fun MainContent(
     uiState: UIState,
     weatherPredictionUIModel: List<WeatherPredictionUIModel>,
     imageUIModel: ImageUIModel?,
-    cityArgs: CityArgs,
+    city: String,
     modifier: Modifier = Modifier
 ) {
     HandleState(
         uiState = uiState,
         weatherPredictionUIModel = weatherPredictionUIModel,
         imageUIModel = imageUIModel,
-        cityArgs = cityArgs,
+        city = city,
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = x2, vertical = x2)
@@ -101,14 +100,14 @@ private fun HandleState(
     uiState: UIState,
     weatherPredictionUIModel: List<WeatherPredictionUIModel>,
     imageUIModel: ImageUIModel?,
-    cityArgs: CityArgs,
+    city: String,
     modifier: Modifier = Modifier
 ) {
     when (uiState) {
         UIState.NORMAL -> {
             WeatherPredictionContentScreen(
                 weatherPredictionUIModel = weatherPredictionUIModel,
-                cityArgs = cityArgs,
+                city = city,
                 imageUIModel = imageUIModel,
                 modifier = modifier
             )
@@ -122,7 +121,7 @@ private fun HandleState(
 private fun WeatherPredictionContentScreen(
     weatherPredictionUIModel: List<WeatherPredictionUIModel>,
     imageUIModel: ImageUIModel?,
-    cityArgs: CityArgs,
+    city: String,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -133,7 +132,7 @@ private fun WeatherPredictionContentScreen(
     ) {
         item {
             Text(
-                text = cityArgs.city,
+                text = city,
                 style = MaterialTheme.typography.displaySmall,
                 modifier = Modifier.padding(vertical = x1)
             )

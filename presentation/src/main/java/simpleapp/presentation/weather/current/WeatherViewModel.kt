@@ -41,7 +41,7 @@ class WeatherViewModel(
         }
     }
 
-    fun setCity(city: String) {
+    fun city(city: String) {
         _city.value = city
     }
 
