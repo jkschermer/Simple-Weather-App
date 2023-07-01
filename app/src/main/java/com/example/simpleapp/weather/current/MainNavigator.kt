@@ -10,7 +10,7 @@ class MainNavigator(private val navigator: DestinationsNavigator) {
     }
 
     private fun String.converseToCorrectFormat(): String {
-        val regex = Regex("^[A-Z]\\S*(?:\\s+[A-Z]\\S*)*$")
+        val regex = Regex("^\\p{Lu}\\p{Ll}*?\\s?(\\p{Lu}\\p{Ll}*)\$")
 
         if (this.matches(regex)) {
             return this
