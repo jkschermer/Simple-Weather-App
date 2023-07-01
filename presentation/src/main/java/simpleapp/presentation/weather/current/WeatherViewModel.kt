@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import nl.simpleapp.domain.weather.current.FetchWeather
 import nl.simpleapp.domain.time.FetchDate
+import nl.simpleapp.domain.weather.current.FetchWeather
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.navigation.WeatherNavigationEvent
 import simpleapp.presentation.weather.current.model.DateUIModel
