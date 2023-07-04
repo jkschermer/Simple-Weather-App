@@ -18,6 +18,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.example.simpleapp.R
 import com.example.simpleapp.theme.SimpleAppTheme
 import com.example.simpleapp.theme.Spacing.x1
@@ -32,7 +34,8 @@ fun AppToolbar(
     textColor: Color,
     onIconClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = false,
+    paddingValue: Dp = x2,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Row(
         horizontalArrangement = Arrangement.Start,
@@ -48,15 +51,17 @@ fun AppToolbar(
             alignment = alignment,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .clickable(onClick = { onIconClick() }, enabled = enabled)
+                .clickable { onIconClick() }
                 .padding(start = x1)
         )
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge.merge(TextStyle(fontWeight = FontWeight.Bold)),
             color = textColor,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = x2)
+            textAlign = textAlign,
+            modifier = Modifier
+                .padding(start = paddingValue)
+                .fillMaxWidth()
         )
     }
 }
@@ -68,23 +73,25 @@ fun MainToolbar() {
         iconResId = R.drawable.ic_logo_round,
         alignment = Alignment.CenterStart,
         textColor = MaterialTheme.colorScheme.background,
-        onIconClick = { },
-        enabled = false
+        onIconClick = { }
     )
 }
 
 @Composable
 fun SecondaryToolbar(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     text: String? = null,
-    onClick: () -> Unit
 ) {
     AppToolbar(
-        text = stringResource(R.string.weather_prediction_screen_toolbar) + " " + text,
+        text = stringResource(R.string.weather_prediction_screen_toolbar),
         iconResId = R.drawable.ic_arrow_back,
         textColor = MaterialTheme.colorScheme.background,
-        alignment = Alignment.CenterStart,
+        textAlign = TextAlign.Center,
+        alignment = Alignment.Center,
         onIconClick = onClick,
-        enabled = true,
+        modifier = modifier.fillMaxWidth(),
+        paddingValue = 0.dp,
     )
 }
 
@@ -98,6 +105,17 @@ private fun PreviewToolbar() {
             alignment = Alignment.CenterStart,
             textColor = MaterialTheme.colorScheme.background,
             onIconClick = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewSecondToolbar() {
+    SimpleAppTheme(darkTheme = true) {
+        SecondaryToolbar(
+            text = stringResource(R.string.homescreen_toolbar_title),
+            onClick = {}
         )
     }
 }
