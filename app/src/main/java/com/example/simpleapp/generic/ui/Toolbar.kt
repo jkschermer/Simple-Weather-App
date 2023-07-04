@@ -34,8 +34,8 @@ fun AppToolbar(
     textColor: Color,
     onIconClick: () -> Unit,
     modifier: Modifier = Modifier,
-    paddingValue: Dp = x2,
-    textAlign: TextAlign = TextAlign.Start,
+    paddingValue: Dp = 0.dp,
+    textAlign: TextAlign = TextAlign.Center,
 ) {
     Row(
         horizontalArrangement = Arrangement.Start,
@@ -53,26 +53,28 @@ fun AppToolbar(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clickable { onIconClick() }
+                .padding(end = paddingValue)
         )
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge.merge(TextStyle(fontWeight = FontWeight.Bold)),
             color = textColor,
             textAlign = textAlign,
-            modifier = Modifier
-                .padding(start = paddingValue)
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
 
 @Composable
-fun MainToolbar() {
+fun MainToolbar(modifier: Modifier = Modifier) {
     AppToolbar(
         text = stringResource(R.string.homescreen_toolbar_title),
         iconResId = R.drawable.ic_logo_round,
+        textAlign = TextAlign.Start,
         alignment = Alignment.CenterStart,
+        paddingValue = x2,
         textColor = MaterialTheme.colorScheme.background,
+        modifier = modifier,
         onIconClick = { }
     )
 }
@@ -89,8 +91,7 @@ fun SecondaryToolbar(
         textAlign = TextAlign.Center,
         alignment = Alignment.CenterStart,
         onIconClick = onClick,
-        modifier = modifier.fillMaxWidth(),
-        paddingValue = 0.dp
+        modifier = modifier
     )
 }
 
