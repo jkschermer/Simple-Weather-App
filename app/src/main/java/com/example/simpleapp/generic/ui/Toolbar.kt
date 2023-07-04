@@ -43,7 +43,8 @@ fun AppToolbar(
         modifier = modifier
             .background(MaterialTheme.colorScheme.primary)
             .height(x8)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(horizontal = x1),
     ) {
         Image(
             painter = painterResource(iconResId),
@@ -52,7 +53,6 @@ fun AppToolbar(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clickable { onIconClick() }
-                .padding(start = x1)
         )
         Text(
             text = text,
