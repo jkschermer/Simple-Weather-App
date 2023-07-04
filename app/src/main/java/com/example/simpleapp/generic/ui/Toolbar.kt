@@ -81,7 +81,6 @@ fun MainToolbar() {
 fun SecondaryToolbar(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    text: String? = null,
 ) {
     AppToolbar(
         text = stringResource(R.string.weather_prediction_screen_toolbar),
@@ -113,9 +112,6 @@ private fun PreviewToolbar() {
 @Composable
 private fun PreviewSecondToolbar() {
     SimpleAppTheme(darkTheme = true) {
-        SecondaryToolbar(
-            text = stringResource(R.string.homescreen_toolbar_title),
-            onClick = {}
-        )
+        SecondaryToolbar(onClick = {})
     }
 }
