@@ -23,7 +23,6 @@ import com.example.simpleapp.generic.ui.ErrorContent
 import com.example.simpleapp.generic.ui.SecondaryToolbar
 import com.example.simpleapp.theme.Spacing.x1
 import com.example.simpleapp.theme.Spacing.x2
-import com.example.simpleapp.theme.Spacing.x3
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.ktor.util.reflect.*
@@ -31,8 +30,8 @@ import org.koin.androidx.compose.koinViewModel
 import simpleapp.presentation.generic.UIState
 import simpleapp.presentation.image.ImageUIModel
 import simpleapp.presentation.navigation.WeatherNavigationEvent
-import simpleapp.presentation.weather.prediction.model.WeatherPredictionUIModel
 import simpleapp.presentation.weather.prediction.WeatherPredictionViewModel
+import simpleapp.presentation.weather.prediction.model.WeatherPredictionUIModel
 
 val ICON_SIZE = Size(50.dp.value, 50.dp.value)
 
@@ -125,7 +124,7 @@ private fun WeatherPredictionContentScreen(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().wrapContentHeight(),
         contentPadding = PaddingValues(vertical = x2),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -173,7 +172,7 @@ private fun WeatherPredictionContentScreen(
                     )
                     Image(
                         painter = rememberAsyncImagePainter(weather.icon),
-                        contentScale = ContentScale.Crop,
+                        contentScale = ContentScale.Fit,
                         modifier = Modifier.size(ICON_SIZE.width.dp, ICON_SIZE.height.dp),
                         contentDescription = null,
                     )
@@ -196,11 +195,10 @@ private fun DisplayCityImage(
             Image(
                 painter = rememberAsyncImagePainter(model = it.imageUrl),
                 contentDescription = "city",
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.FillWidth,
                 modifier = modifier
-                    .size(200.dp)
+                    .height(250.dp)
                     .aspectRatio(1F)
-                    .padding(vertical = x3)
             )
         } else {
             CircularProgressIndicator(modifier = modifier.wrapContentSize())

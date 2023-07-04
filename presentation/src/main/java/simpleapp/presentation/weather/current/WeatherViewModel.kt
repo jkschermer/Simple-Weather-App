@@ -34,7 +34,7 @@ class WeatherViewModel(
     private suspend fun setupWeather(city: String) {
         try {
             _weather.value = WeatherInfoUIMapper.mapToUIModel(fetchWeather(city))
-            _date.value = DateUIMapper.mapToUIModel(fetchDate.invoke())
+            _date.value = DateUIMapper.mapToUIModel(fetchDate())
             _state.value = UIState.NORMAL
         } catch (e: Exception) {
             _state.value = UIState.ERROR
