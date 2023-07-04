@@ -62,7 +62,7 @@ fun WeatherPredictionScreen(
     }
 
     Scaffold(
-        topBar = { SecondaryToolbar(text = city, onClick = viewModel::navigateBack) },
+        topBar = { SecondaryToolbar(onClick = viewModel::navigateBack) },
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) {
         MainContent(
