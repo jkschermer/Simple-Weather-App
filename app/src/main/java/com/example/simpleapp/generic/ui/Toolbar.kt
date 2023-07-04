@@ -35,7 +35,6 @@ fun AppToolbar(
     onIconClick: () -> Unit,
     modifier: Modifier = Modifier,
     paddingValue: Dp = x2,
-    horizontalOffset: Dp = 0.dp,
     textAlign: TextAlign = TextAlign.Start,
 ) {
     Row(
@@ -62,7 +61,6 @@ fun AppToolbar(
             textAlign = textAlign,
             modifier = Modifier
                 .padding(start = paddingValue)
-                .absoluteOffset(x = horizontalOffset)
                 .fillMaxWidth()
         )
     }
@@ -92,8 +90,7 @@ fun SecondaryToolbar(
         alignment = Alignment.CenterStart,
         onIconClick = onClick,
         modifier = modifier.fillMaxWidth(),
-        paddingValue = 0.dp,
-        horizontalOffset = -x1
+        paddingValue = 0.dp
     )
 }
 
