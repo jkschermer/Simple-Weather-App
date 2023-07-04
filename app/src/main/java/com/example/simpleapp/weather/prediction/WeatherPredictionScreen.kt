@@ -124,7 +124,9 @@ private fun WeatherPredictionContentScreen(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxWidth().wrapContentHeight(),
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         contentPadding = PaddingValues(vertical = x2),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -180,7 +182,7 @@ private fun WeatherPredictionContentScreen(
             }
         }
         item {
-            DisplayCityImage(imageUIModel = imageUIModel)
+            DisplayCityImage(imageUIModel = imageUIModel, modifier = Modifier.padding(top = x2))
         }
     }
 }
