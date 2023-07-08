@@ -20,6 +20,6 @@ class MainNavigator(private val navigator: DestinationsNavigator) {
             word.lowercase().replaceFirstChar { it.uppercase() }
         }
 
-        return result.joinToString(" ")
+        return result.joinToString(" ").trimEnd()
     }
 }
